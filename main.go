@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"go-booking-app/helper" 
 )
 
 const conferenceTickets = 50
@@ -17,7 +18,7 @@ func main() {
 	for {
 		firstName, lastName, email, userTickets := getUserInput()
 
-		isValidName, isValidEmail, isValidTicketCount := validateUserInput(firstName, lastName, email, userTickets)
+		isValidName, isValidEmail, isValidTicketCount := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidTicketCount {
 
