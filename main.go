@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 const conferenceTickets = 50
 var conferenceName = "Go Conference"
@@ -30,6 +33,11 @@ func main() {
 		if isValidName && isValidEmail && isValidTicketCount {
 
 			bookTicket(userTickets, firstName, lastName, email)
+			go sendTicket(userTickets, firstName, lastName, email) 
+			// By adding the keyword "go" in front of this, it makes it concurrent.
+			// Now, generating and sending the ticket task runs in the background 
+			// while the next lines of code continue executing.
+			// Improves efficiency of program.
 
 			firstNames := getFirstNames()
 			fmt.Printf("The first names of bookings: %v\n", firstNames)
@@ -105,5 +113,15 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+}
 
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	// The sleep func stops/blocks the current "thread" (goroutine) execution for the defined duration.
+	// In this case, it will simulate sleep for 10 secs, then execute the next lines of code.
+	time.Sleep(10 * time.Second)
+	// fmt.Sprintf() is used to save formatted strings into a variable rather than printing it out 
+	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+	fmt.Println("********************************") //visual divider
+	fmt.Printf("Sending ticket(s):\n %v \nto email address %v\n", ticket, email)
+	fmt.Println("********************************")
 }
