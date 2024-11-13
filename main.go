@@ -1,14 +1,22 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 const conferenceTickets = 50
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50 //uint means it cannot be a negative
-var bookings = make([]map[string]string, 0) // this creates an empty list of maps, with an initial size of 0 which can expand
+// var bookings = make([]map[string]string, 0) // this creates an empty list of maps, with an initial size of 0 which can expand
+var bookings = make([]UserData, 0) // this creates an empty list of userdata type struct
+
+// Struct, stands for structure
+// Struct can hold mixed data types
+
+type UserData struct { // The "type" keyword creates a new custom type with the name you specify
+	firstName string
+	lastName string
+	email string
+	numberOfTickets uint
+}
 
 func main() {
 
@@ -52,8 +60,8 @@ func greetUsers() {
 
 func getFirstNames() []string {
 	firstNames := []string{}
-	for _, element := range bookings { // underscore is a blank identifier to ignore a variable you don't want to use
-		firstNames = append(firstNames, element["firstName"])
+	for _, booking := range bookings { // underscore is a blank identifier to ignore a variable you don't want to use
+		firstNames = append(firstNames, booking.firstName) // Need to use a dot after struct element followed by field name of the user type
 	}
 	return firstNames
 }
@@ -84,15 +92,14 @@ func getUserInput() (string, string, string, uint) {
 func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
 
-	// Create an empty map for user
-	// All keys have the same data type, and all values have the same data type
-	var userData = make(map[string]string)
-	userData["firstName"] = firstName
-	userData["lastName"] = lastName
-	userData["email"] = email
-	// FormatUint takes our uint value and formats it to a string as a decimal number
-	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
- 	
+	// Instead of map, we're using struct 
+	var userData = UserData {
+		firstName: firstName,
+		lastName: lastName,
+		email: email,
+		numberOfTickets: userTickets,
+	}
+
 	bookings = append(bookings, userData)
 	fmt.Printf("List of bookings is %v\n", bookings)
 
