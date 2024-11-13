@@ -5,11 +5,13 @@ import (
 	"strings"
 )
 
+// package level variables
+var conferenceName = "Go Conference"
+const conferenceTickets = 50
+var remainingTickets uint = 50 //uint means it cannot be a negative
+var bookings = []string{}
+
 func main() {
-	var conferenceName = "Go Conference"
-	const conferenceTickets = 50
-	var remainingTickets uint = 50 //uint means it cannot be a negative
-	var bookings []string
 
 	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
@@ -19,12 +21,8 @@ func main() {
 		isValidName, isValidEmail, isValidTicketCount := validateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidTicketCount { // if all 3 are true
-			remainingTickets = remainingTickets - userTickets
-			// Dynamically adding to array
-			bookings = append(bookings, firstName+" "+lastName)
 
-			fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
-			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+			bookTicket(remainingTickets, userTickets, bookings, firstName, lastName, email, conferenceName)
 
 			firstNames := getFirstNames(bookings)
 			fmt.Printf("The first names of bookings: %v\n", firstNames)
@@ -89,4 +87,13 @@ func getUserInput() (string, string, string, uint) {
 	fmt.Scan(&userTickets)
 
 	return firstName, lastName, email, userTickets
+}
+
+func bookTicket(remainingTickets uint, userTickets uint, bookings []string, firstName, lastName, email, conferenceName) {
+	remainingTickets = remainingTickets - userTickets
+	bookings = append(bookings, firstName+" "+lastName)
+
+	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
 }
