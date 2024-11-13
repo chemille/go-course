@@ -7,17 +7,12 @@ import (
 
 func main() {
 	var conferenceName = "Go Conference"
-	// You can declare var like this too --> conferenceName := "Go Conference"
 	const conferenceTickets = 50
 	var remainingTickets uint = 50 //uint means it cannot be a negative
 	var bookings []string
 
-	fmt.Printf("Welcome to %v booking application!\n", conferenceName)
-	fmt.Printf("We have a total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here")
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
-	// In Go, there are only for loops. No while loops.
-	// infinite for loop
 	for {
 		var firstName string
 		var lastName string
@@ -28,13 +23,13 @@ func main() {
 		fmt.Scan(&firstName) // & is a pointer that will print out the memory address of the variable
 
 		fmt.Println("Enter your last name: ")
-		fmt.Scan(&lastName) // & is a pointer that will print out the memory address of the variable
+		fmt.Scan(&lastName)
 
 		fmt.Println("Enter your email address: ")
-		fmt.Scan(&email) // & is a pointer that will print out the memory address of the variable
+		fmt.Scan(&email)
 
 		fmt.Println("Enter number of tickets: ")
-		fmt.Scan(&userTickets) // & is a pointer that will print out the memory address of the variable
+		fmt.Scan(&userTickets)
 
 		// User input validation
 		var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
@@ -57,7 +52,6 @@ func main() {
 			fmt.Printf("The first names of bookings: %v\n", firstNames)
 
 			if remainingTickets == 0 {
-				// end program
 				fmt.Println("Our conference is fully booked. Come back next year.")
 				break
 			}
@@ -73,5 +67,10 @@ func main() {
 			}
 		}
 	}
+}
 
+func greetUsers(confName string, confTickets int, remainingTickets uint) { // explicitly define type of the input param
+	fmt.Printf("Welcome to %v booking application!\n", confName)
+	fmt.Printf("We have a total of %v tickets and %v are still available.\n", confTickets, remainingTickets)
+	fmt.Println("Get your tickets here")
 }
